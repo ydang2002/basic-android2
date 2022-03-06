@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    orientation: là dùng để đặt chiều ngang dọc cho button-->
+<!--    padding="@dimen/padding_dimen": dùng để cách trên dưới trái phải của màn hình hoặc có thể cách một bên trái ...-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:background="@color/teal_200"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_dimen"
+    android:layout_height="match_parent">
+<!--    margin="@dimen/padding_dimen": dùng để cách mọi thứ xung quanh một khoảng-->
+<!--    padding="@dimen/padding_dimen": muốn tất cả cái nằm trong cách bản thân nó bao nhiêu-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:background="@color/white"
+        android:layout_margin="@dimen/padding_dimen"
+        android:padding="@dimen/padding_dimen"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"></Button>
+
+    </LinearLayout>
+<!--    text="@string/submit": tạo một file dimens.xml trong values với nội dung text: là button-->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"></Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"></Button>
+
+</LinearLayout>
