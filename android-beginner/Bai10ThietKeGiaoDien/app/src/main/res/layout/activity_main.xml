@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:background="@color/teal_200"
+    android:padding="20dp"
+    android:layout_margin="10dp"
+    android:layout_height="match_parent">
+
+<!--    android:layout_alignParentEnd="true"-->
+<!--    android:layout_alignParentBottom="true": thuộc tính dùng để cho button nằm trên dưới trái phải-->
+<!--    android:layout_centerVertical="true": thuộc tính làm cho các button nằm ở giữa-->
+<!--    android:id="@+id/btn_1": đặt id cho button-->
+<!--    android:layout_below="@id/btn_1": thuộc tính giúp cho button không đè lên button khác-->
+<!--    android:layout_above="@id/btn_3": thuộc tính làm cho button nằm trên một button khác-->
+<!--    android:layout_alignParentEnd="true": thuộc tính nằm bên phải phía trên-->
+<!--    android:layout_toStartOf="@id/btn_5": thuộc tính làm cho button nằm bên trái một button khác-->
+<!--    android:layout_centerVertical="true": thuộc tính làm cho button nằm giữa bên trái-->
+
+    <Button
+        android:id="@+id/btn_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="button 1"></Button>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_1"
+        android:text="button 2"></Button>
+
+    <Button
+        android:id="@+id/btn_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="button 3"></Button>
+
+    <Button
+        android:id="@+id/btn_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_3"
+        android:text="button 4"></Button>
+
+    <Button
+        android:id="@+id/btn_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:text="button 5"></Button>
+
+    <Button
+        android:id="@+id/btn_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/btn_5"
+        android:text="button 6"></Button>
+
+    <Button
+        android:id="@+id/btn_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Button 7"></Button>
+
+    <Button
+        android:id="@+id/btn_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="Button 8"
+        android:layout_toEndOf="@id/btn_7"></Button>
+
+
+</RelativeLayout>
