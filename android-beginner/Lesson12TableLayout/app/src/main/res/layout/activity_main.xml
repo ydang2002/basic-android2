@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    android:stretchColumns="*": dãn cách các text-->
+<!--    android:collapseColumns="0": ẩn các cột -->
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:stretchColumns="*"
+    android:layout_height="match_parent">
+
+    <TableRow
+        android:background="@color/teal_200">
+
+       <TextView
+           android:text="Name"
+           android:textStyle="bold"></TextView>
+
+        <TextView
+            android:text="Hi"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:text="Hello"
+            android:textStyle="bold"></TextView>
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:text="NhuY"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:text="DaLat"
+            android:textStyle="bold"></TextView>
+
+        <TextView
+            android:text="Hello"
+            android:textStyle="bold"></TextView>
+    </TableRow>
+
+    <TableRow
+        android:background="@color/purple_500">
+
+        <TextView
+            android:text="Name"
+            android:textStyle="bold"></TextView>
+
+
+    </TableRow>
+
+</TableLayout>
