@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:weightSum="3"
+    android:layout_height="match_parent">
+<!--    android:weightSum="6":chia các phần theo tỉ lệ mong muốn, và đặt weightSum vào lineraLayout tổng-->
+<!--    android:layout_weight="1"-->
+<!--    android:layout_weight="2"-->
+<!--    android:layout_weight="3"-->
+<!--    đặc biệt khi linearLayout tổng: android:orientation="vertical"-->
+<!--    thì chúng ta cần thay đổi tất cả các layout_height="0dp"-->
+<!--    ngược lại khi linearLayout tổng: android:orientation="horizontal"-->
+<!--    thì chúng ta cần thay đổi tất cả các layout_width="0dp"-->
+
+<!--    android:layout_weight="1": thuộc tính chia các linearLayout theo các phần bằng nhau -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:background="@color/teal_700"
+        android:orientation="vertical">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Layout 1"
+        android:textColor="@android:color/white"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:background="@color/cardview_dark_background"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Layout 2"
+            android:textColor="@android:color/white"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:background="@color/design_default_color_primary_variant"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Layout 3"
+            android:textColor="@android:color/white"></TextView>
+    </LinearLayout>
+</LinearLayout>
