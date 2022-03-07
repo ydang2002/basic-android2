@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--    orientation: là dùng để đặt chiều ngang dọc cho button-->
 <!--    padding="@dimen/padding_dimen": dùng để cách trên dưới trái phải của màn hình hoặc có thể cách một bên trái ...-->
+<!--    android:gravity="": thuộc tính căn lề cho các view-->
+<!--    android:visibility="": thuộc tính ẩn hiện các-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
     android:background="@color/teal_200"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="@dimen/padding_dimen"
     android:layout_height="match_parent">
 <!--    margin="@dimen/padding_dimen": dùng để cách mọi thứ xung quanh một khoảng-->
@@ -15,6 +18,7 @@
         android:background="@color/white"
         android:layout_margin="@dimen/padding_dimen"
         android:padding="@dimen/padding_dimen"
+        android:visibility=""
         android:layout_height="wrap_content">
 
         <Button
