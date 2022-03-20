@@ -3,9 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson8StickyListHeadersView/app/src/main/res/layout/activity_main.xml" value="0.136" />
-        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson8StickyListHeadersView/app/src/main/res/layout/layout_header.xml" value="0.2" />
-        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson8StickyListHeadersView/app/src/main/res/layout/layout_item.xml" value="0.2" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson10RecyclerViewStickyHeader/app/src/main/res/layout/layout_animal.xml" value="0.17572463768115942" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson10RecyclerViewStickyHeader/app/src/main/res/layout/layout_header.xml" value="0.136" />
       </map>
     </option>
   </component>
