@@ -1,5 +1,6 @@
 package com.nhuy.lesson11recyclerfloatingactionbutton;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,12 +24,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_user,parent,false);
+
+        return new UserViewHolder(parent);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
-
+        //khai báo user
+        User user = mListUser.get(position);
+        if(mListUser == null){
+            return;
+        }
+        holder.imgUser.setImageResource((user.getResourceId()));
+        holder.tvName.setText(user.getName());
     }
 
     @Override
