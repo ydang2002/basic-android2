@@ -1,5 +1,6 @@
 package com.nhuy.lesson11recyclerfloatingactionbutton;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,18 @@ public class MainActivity extends AppCompatActivity {
         rcvUser.setAdapter(userAdapter);
 
         //xử lí button floating ẩn hoặc hiện
-        rcvUser.addOnScrollListener(new);
+        rcvUser.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if(dy > 0){
+                    //ẩn btn
+                    btnFloating.hide();
+                } else  {
+                    btnFloating.show();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private List<User> getListUser(){
