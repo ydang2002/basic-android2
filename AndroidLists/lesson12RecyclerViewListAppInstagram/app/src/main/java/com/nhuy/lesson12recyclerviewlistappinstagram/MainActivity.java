@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         List<Photo> list2 = new ArrayList<>();
         list2.add(new Photo(R.drawable.img_avatar_4));
-        list2.add(new Photo(R.drawable.img_avatar_3));
+        list2.add(new Photo(R.drawable.img_avatar_4));
         list2.add(new Photo(R.drawable.img_avatar_2));
 
         listPhotos.add(new ListPhoto(ListPhotoAdapter.TYPE_GRID,list));
