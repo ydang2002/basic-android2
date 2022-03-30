@@ -71,7 +71,7 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
             //Khai báo các thành view trong layout_item_group
             TextView tvGroup = convertView.findViewById(R.id.tv_group);
             GroupObject groupObject = mListGroup.get(groupPosition);
-            tvGroup.setText(groupObject.getName());
+            tvGroup.setText(groupObject.getName().toUpperCase());//toUpperCase()); viết chữ in hoa cho Group
         }
         return convertView;
     }
