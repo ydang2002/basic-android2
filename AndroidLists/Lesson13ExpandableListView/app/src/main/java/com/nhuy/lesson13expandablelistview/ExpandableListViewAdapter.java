@@ -68,11 +68,12 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView == null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_group,parent,false);
-            //Khai báo các thành view trong layout_item_group
-            TextView tvGroup = convertView.findViewById(R.id.tv_group);
-            GroupObject groupObject = mListGroup.get(groupPosition);
-            tvGroup.setText(groupObject.getName().toUpperCase());//toUpperCase()); viết chữ in hoa cho Group
         }
+
+        //Khai báo các thành view trong layout_item_group
+        TextView tvGroup = convertView.findViewById(R.id.tv_group);
+        GroupObject groupObject = mListGroup.get(groupPosition);
+        tvGroup.setText(groupObject.getName().toUpperCase());//toUpperCase()); viết chữ in hoa cho Group
         return convertView;
     }
 
@@ -80,11 +81,13 @@ public class ExpandableListViewAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView == null){
             convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item,parent,false);
-            //Khai báo các thành view trong layout_item_group
-            TextView tvItem = convertView.findViewById(R.id.tv_item);
-            ItemObject itemObject = mListItem.get(mListGroup.get(groupPosition)).get(childPosition);
-            tvItem.setText(itemObject.getName());
         }
+
+        //Khai báo các thành view trong layout_item_group
+        TextView tvItem = convertView.findViewById(R.id.tv_item);
+        ItemObject itemObject = mListItem.get(mListGroup.get(groupPosition)).get(childPosition);
+        tvItem.setText(itemObject.getName());
+
         return convertView;
     }
 
