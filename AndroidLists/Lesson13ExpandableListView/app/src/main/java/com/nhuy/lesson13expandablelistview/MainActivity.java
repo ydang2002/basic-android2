@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
         //Khởi tạo adapter
         expandableListViewAdapter = new ExpandableListViewAdapter(mListGroup, mListItem);
         expandableListView.setAdapter(expandableListViewAdapter);
+
+        // bắt sự kiện khi click vào các Group
+        expandableListView.setOnChildClickListener(parent, v, groupPosition, id) -> {
+
+        };
+
     }
 
     private  Map<GroupObject, List<ItemObject>> getmListItems(){
