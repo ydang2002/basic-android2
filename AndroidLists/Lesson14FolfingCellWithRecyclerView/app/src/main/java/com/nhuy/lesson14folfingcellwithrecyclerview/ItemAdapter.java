@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ItemObject itemObject = mListItems.get(position);
+        final ItemObject itemObject = mListItems.get(position);
         if (itemObject == null){
             return;
         }
@@ -42,6 +43,24 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             @Override
             public void onClick(View view) {
                 holder.foldingCell.toggle(false);
+            }
+        });
+
+        //Bắt sự kiện title khi click vào
+        holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Thông báo cho người dùng
+                Toast.makeText(view.getContext(),itemObject.getTitle(),Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //Bắt sự kiện content khi click vào
+        holder.tvContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Thông báo cho người dùng
+                Toast.makeText(view.getContext(),itemObject.getContent(),Toast.LENGTH_SHORT).show();
             }
         });
     }
