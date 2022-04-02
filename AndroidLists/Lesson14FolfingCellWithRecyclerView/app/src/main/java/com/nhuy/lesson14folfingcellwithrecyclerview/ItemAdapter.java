@@ -39,12 +39,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
         holder.tvTitle.setText(itemObject.getTitle());
         holder.tvContent.setText(itemObject.getContent());
-        holder.foldingCell.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.foldingCell.toggle(false);
-            }
-        });
+        //Thực hiện việc gấp lại
+//        holder.foldingCell.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.foldingCell.toggle(false);
+//            }
+//        });
 
         //Bắt sự kiện title khi click vào
         holder.tvTitle.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             public void onClick(View view) {
                 //Thông báo cho người dùng
                 Toast.makeText(view.getContext(),itemObject.getTitle(),Toast.LENGTH_SHORT).show();
+                //Thực hiện việc gấp lại
+                holder.foldingCell.toggle(false);
             }
         });
 
@@ -61,6 +64,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             public void onClick(View view) {
                 //Thông báo cho người dùng
                 Toast.makeText(view.getContext(),itemObject.getContent(),Toast.LENGTH_SHORT).show();
+                //Thực hiện việc gấp lại
+                holder.foldingCell.toggle(false);
             }
         });
     }
