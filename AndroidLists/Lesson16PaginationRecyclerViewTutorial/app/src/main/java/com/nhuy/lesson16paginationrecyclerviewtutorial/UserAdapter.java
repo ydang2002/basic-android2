@@ -32,10 +32,10 @@ public class UserAdapter extends RecyclerView.Adapter <UserAdapter.UserViewHolde
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         //b8 Khai báo user
         User user = mListUser.get(position);
-        if(user != null){
+        if(user == null){
             return;
         }
-        holder.tvName.setText(user.getName() +(position + 1));
+        holder.tvName.setText(user.getName() + " " +(position + 1));
     }
 
     //b6
