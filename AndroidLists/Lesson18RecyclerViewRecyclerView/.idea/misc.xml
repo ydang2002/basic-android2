@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson18RecyclerViewRecyclerView/app/src/main/res/layout/item_user.xml" value="0.12537993920972645" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson18RecyclerViewRecyclerView/app/src/main/res/layout/activity_main.xml" value="0.10400000000000001" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson18RecyclerViewRecyclerView/app/src/main/res/layout/item_category.xml" value="0.176" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson18RecyclerViewRecyclerView/app/src/main/res/layout/item_user.xml" value="0.1" />
+        <entry key="..\:/src/AndroidStudio/basic-android2/AndroidLists/Lesson18RecyclerViewRecyclerView/app/src/main/res/layout/layout_list_data.xml" value="0.11200000000000002" />
       </map>
     </option>
   </component>
