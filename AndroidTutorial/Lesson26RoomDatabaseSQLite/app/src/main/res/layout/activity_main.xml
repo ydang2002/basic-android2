@@ -22,9 +22,10 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:layout_marginTop="14dp"
-        android:hint="Username"/>
+        android:hint="Useradress"/>
 
     <Button
+        android:id="@+id/btn_add_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_200"

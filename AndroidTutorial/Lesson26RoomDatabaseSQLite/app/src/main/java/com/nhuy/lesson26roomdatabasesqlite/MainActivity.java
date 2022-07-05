@@ -1,14 +1,100 @@
 package com.nhuy.lesson26roomdatabasesqlite;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.nhuy.lesson26roomdatabasesqlite.database.UserDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private EditText editUsername;
+    private EditText editAddress;
+    private Button btnAddUser;
+    private RecyclerView rcvUser;
+
+    private UserAdapter userAdapter;
+    private List<User> mListUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initUI();
+
+        userAdapter = new UserAdapter();
+        mListUser = new ArrayList<>();
+        userAdapter.setData(mListUser);
+
+        //Thiết kế recyclerView
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rcvUser.setLayoutManager(linearLayoutManager);
+
+        rcvUser.setAdapter(userAdapter);
+
+        //bắt sự kiện button
+        btnAddUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adduser();
+            }
+        });
+    }
+
+    //hàm thực hiện ánh xạ view
+    private void initUI(){
+        editUsername = findViewById(R.id.edit_username);
+        editAddress = findViewById(R.id.edit_address);
+        btnAddUser = findViewById(R.id.btn_add_user);
+        rcvUser = findViewById(R.id.rcv_user);
+    }
+
+    //Hàm thêm user
+    private void adduser() {
+        //trim xóa kí tự trắng đầu và cuối
+        String strUsername = editUsername.getText().toString().trim();
+        String strAddress = editAddress.getText().toString().trim();
+        //kiểm tra 1 trong hai user hoặc dress trống thì không add vào database
+        if(TextUtils.isEmpty(strUsername) || TextUtils.isEmpty(strAddress)){
+            return;
+        }
+
+        User user = new User(strUsername, strAddress);
+        //add user vào database
+        UserDatabase.getInstance(this).userDAO().insertUser(user);
+        //Thông báo add user thành công
+        Toast.makeText(this, "Add user successfully", Toast.LENGTH_SHORT).show();
+        //reset 2 text view
+        editUsername.setText("");
+        editAddress.setText("");
+
+        hideSoftKeyboard();
+
+        //hiển thị dữ liệu sau khi add thành công
+        mListUser = UserDatabase.getInstance(this).userDAO().getListUser();
+        userAdapter.setData(mListUser);
+    }
+
+    //Hàm ẩn bàn phím
+    public void hideSoftKeyboard(){
+        try {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (NullPointerException ex){
+            ex.printStackTrace();
+        }
+
     }
 }
