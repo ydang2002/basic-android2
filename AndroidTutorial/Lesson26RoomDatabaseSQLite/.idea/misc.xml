@@ -4,7 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/src/Android/basic-android2/AndroidTutorial/Lesson26RoomDatabaseSQLite/app/src/main/res/layout/activity_main.xml" value="0.10400000000000001" />
-        <entry key="..\:/src/Android/basic-android2/AndroidTutorial/Lesson26RoomDatabaseSQLite/app/src/main/res/layout/item_user.xml" value="0.12537993920972645" />
+        <entry key="..\:/src/Android/basic-android2/AndroidTutorial/Lesson26RoomDatabaseSQLite/app/src/main/res/layout/activity_update.xml" value="0.10400000000000001" />
+        <entry key="..\:/src/Android/basic-android2/AndroidTutorial/Lesson26RoomDatabaseSQLite/app/src/main/res/layout/item_user.xml" value="0.1" />
       </map>
     </option>
   </component>

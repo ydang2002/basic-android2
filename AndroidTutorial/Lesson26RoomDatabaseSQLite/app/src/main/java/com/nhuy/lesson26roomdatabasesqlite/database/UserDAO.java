@@ -3,6 +3,7 @@ package com.nhuy.lesson26roomdatabasesqlite.database;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.nhuy.lesson26roomdatabasesqlite.User;
 
@@ -20,4 +21,7 @@ public interface UserDAO {
     //Hàm check username
     @Query("SELECT * FROM user WHERE username= :username")
     List<User> checkUser(String username);
+
+    @Update
+    void updateUser(User user);
 }

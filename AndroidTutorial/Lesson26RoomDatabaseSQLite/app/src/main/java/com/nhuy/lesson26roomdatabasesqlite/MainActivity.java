@@ -1,10 +1,12 @@
 package com.nhuy.lesson26roomdatabasesqlite;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int My_REQUEST_CODE = 10;
     private EditText editUsername;
     private EditText editAddress;
     private Button btnAddUser;
@@ -34,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initUI();
 
-        userAdapter = new UserAdapter();
+        userAdapter = new UserAdapter(new UserAdapter.IClickItemUser() {
+            @Override
+            public void updateUser(User user) {
+                ClickUpdateUser(user);
+            }
+        });
         mListUser = new ArrayList<>();
         userAdapter.setData(mListUser);
 
@@ -116,5 +124,23 @@ public class MainActivity extends AppCompatActivity {
     private boolean isUserExit(User user){
         List<User> list = UserDatabase.getInstance(this).userDAO().checkUser(user.getUsername());
         return list != null && !list.isEmpty();
+    }
+
+    //Hàm click update user
+    private void ClickUpdateUser(User user){
+        Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("object_user", user);
+        intent.putExtras(bundle);
+        startActivityForResult(intent, My_REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == My_REQUEST_CODE && resultCode == Activity.RESULT_OK){
+            loadData();
+        }
     }
 }

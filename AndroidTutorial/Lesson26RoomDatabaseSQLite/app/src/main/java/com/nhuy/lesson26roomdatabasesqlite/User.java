@@ -3,9 +3,11 @@ package com.nhuy.lesson26roomdatabasesqlite;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 //đặt tên bảng
 @Entity(tableName = "user")
-public class User {
+public class User implements Serializable {
 
     //trường id làm khóa chính, id tự động tăng
     @PrimaryKey(autoGenerate = true)
