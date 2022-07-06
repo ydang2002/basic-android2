@@ -51,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 adduser();
             }
         });
+
+        //Gọi hàm load data
+        loadData();
     }
 
     //hàm thực hiện ánh xạ view
@@ -72,6 +75,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         User user = new User(strUsername, strAddress);
+
+        //gọi hàm checkUser
+        if(isUserExit(user)){
+            Toast.makeText(this, "User exit", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         //add user vào database
         UserDatabase.getInstance(this).userDAO().insertUser(user);
         //Thông báo add user thành công
@@ -79,12 +89,11 @@ public class MainActivity extends AppCompatActivity {
         //reset 2 text view
         editUsername.setText("");
         editAddress.setText("");
-
+        //gọi hàm ẩn bàn phím
         hideSoftKeyboard();
 
-        //hiển thị dữ liệu sau khi add thành công
-        mListUser = UserDatabase.getInstance(this).userDAO().getListUser();
-        userAdapter.setData(mListUser);
+        //gọi hàm loadData
+        loadData();
     }
 
     //Hàm ẩn bàn phím
@@ -95,6 +104,17 @@ public class MainActivity extends AppCompatActivity {
         } catch (NullPointerException ex){
             ex.printStackTrace();
         }
+    }
 
+    //hiển thị dữ liệu sau khi add thành công
+    private void loadData(){
+        mListUser = UserDatabase.getInstance(this).userDAO().getListUser();
+        userAdapter.setData(mListUser);
+    }
+
+    //Hàm kiểm tra username có tồn tại không
+    private boolean isUserExit(User user){
+        List<User> list = UserDatabase.getInstance(this).userDAO().checkUser(user.getUsername());
+        return list != null && !list.isEmpty();
     }
 }

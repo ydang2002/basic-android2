@@ -16,4 +16,8 @@ public interface UserDAO {
 
     @Query("SELECT * FROM user")
     List<User> getListUser();
+
+    //Hàm check username
+    @Query("SELECT * FROM user WHERE username= :username")
+    List<User> checkUser(String username);
 }
