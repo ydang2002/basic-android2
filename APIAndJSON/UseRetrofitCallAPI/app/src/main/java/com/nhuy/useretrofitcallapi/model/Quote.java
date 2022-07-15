@@ -1,4 +1,4 @@
-package com.nhuy.useretrofitcallapi;
+package com.nhuy.useretrofitcallapi.model;
 
 import com.google.gson.annotations.SerializedName;
 

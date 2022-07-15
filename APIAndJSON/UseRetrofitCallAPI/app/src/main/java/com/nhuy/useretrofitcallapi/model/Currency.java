@@ -1,4 +1,4 @@
-package com.nhuy.useretrofitcallapi;
+package com.nhuy.useretrofitcallapi.model;
 
 public class Currency {
     private boolean success;
