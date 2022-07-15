@@ -47,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     //Link API: http://apilayer.net/api/live?access_key=843d4d34ae72b3882e3db642c51e28e6&currencies=VND&source=USD&format=1
     private void clickCallApi() {
-        ApiService.apiService.convertUsdVnd("843d4d34ae72b3882e3db642c51e28e6",
-                "VND", "USD", 1).enqueue(new Callback<Currency>() {
+//        ApiService.apiService.convertUsdVnd("843d4d34ae72b3882e3db642c51e28e6",
+//                "VND", "USD", 1).enqueue(new Callback<Currency>() {
+        ApiService.apiService.convertUsdVnd1().enqueue(new Callback<Currency>() {
              // Trả về dữ liệu nếu như Call Api thành công
             @Override
             public void onResponse(Call<Currency> call, Response<Currency> response) {
