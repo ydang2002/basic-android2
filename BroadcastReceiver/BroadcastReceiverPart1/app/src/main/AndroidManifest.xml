@@ -24,12 +24,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ExampleBroadcastReceiver"
-            android:exported="true">
-           <intent-filter>
-                <action android:name="android.net.com.CONNECTIVITY_CHANGE"/>
-           </intent-filter>
-        </receiver>
+
 
     </application>
 
