@@ -1,4 +1,4 @@
-package com.nhuy.sendobjectlistobject1part4;
+package com.nhuy.sendobjectlistobject2part4;
 
 public class User {
     private int id;
