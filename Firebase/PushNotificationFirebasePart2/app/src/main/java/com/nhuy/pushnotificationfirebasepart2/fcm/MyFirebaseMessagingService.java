@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -15,17 +16,27 @@ import com.nhuy.pushnotificationfirebasepart2.MainActivity;
 import com.nhuy.pushnotificationfirebasepart2.MyApplication;
 import com.nhuy.pushnotificationfirebasepart2.R;
 
+import java.util.Map;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    public static final String TAG = MyFirebaseMessagingService.class.getName();
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
-        RemoteMessage.Notification notification = message.getNotification();
-        if(notification == null) {
-            return;
-        }
-        String strTitle = notification.getTitle();
-        String strMessage = notification.getBody();
+//        RemoteMessage.Notification notification = message.getNotification();
+//        if(notification == null) {
+//            return;
+//        }
+//        String strTitle = notification.getTitle();
+//        String strMessage = notification.getBody();
+
+        //Data message
+        Map<String, String> stringMap =  message.getData();
+
+        String strTitle = stringMap.get("user_name");
+        String strMessage = stringMap.get("description");
 
         sendNotification(strTitle, strMessage);
     }
@@ -43,8 +54,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Notification notification = notificationBuilder.build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(notification != null){
-            notificationManager.notify(1, notification);
+        if(notificationManager != null){
+            notificationManager.notify(1, notificationBuilder.build());
         }
+    }
+
+    @Override
+    public void onNewToken(@NonNull String token) {
+        super.onNewToken(token);
+
+        Log.e(TAG, token);
     }
 }
