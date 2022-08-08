@@ -3,6 +3,7 @@ package com.nhuy.customnavigaationdrawer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private EditText edtEmail, edtPassword;
     private Button btnSignUp;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public class SignUpActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_email);
         edtPassword = findViewById(R.id.edt_password);
         btnSignUp = findViewById(R.id.btn_sign_up);
+
+        progressDialog = new ProgressDialog(this);
     }
 
     private void initListener() {
@@ -50,10 +54,12 @@ public class SignUpActivity extends AppCompatActivity {
         String strEmail = edtEmail.getText().toString().trim();
         String srtPassword = edtPassword.getText().toString().trim();
         FirebaseAuth auth = FirebaseAuth.getInstance();
+        progressDialog.show();
         auth.createUserWithEmailAndPassword(strEmail, srtPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        progressDialog.dismiss();
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
