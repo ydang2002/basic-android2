@@ -10,12 +10,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.nhuy.customnavigaationdrawer.Fragment.FavoriteFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HistoryFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HomeFragment;
@@ -32,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TabLayout mTabLayout;
     private ViewPager2 mViewPager2;
     private MyViewPagerAdapter mMyViewPagerAdapter;
+    private ImageView imgAvatar;
+    private TextView tvEmail, tvName;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        initUi();
 
         mTabLayout = findViewById(R.id.tab_layout);
         mViewPager2 = findViewById(R.id.view_pager2);
@@ -68,11 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
+        mNavigationView.setNavigationItemSelectedListener(this);
 
 //        replaceFragment(new HomeFragment());
-        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
         mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
@@ -81,19 +93,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 switch (position){
                     case 0:
                         mCurrentFragment = FRAGMENT_HOME;
-                        navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
                         break;
                     case 1:
                         mCurrentFragment = FRAGMENT_FAVORITE;
-                        navigationView.getMenu().findItem(R.id.nav_favorite).setChecked(true);
+                        mNavigationView.getMenu().findItem(R.id.nav_favorite).setChecked(true);
                         break;
                     case 2:
                         mCurrentFragment = FRAGMENT_HISTORY;
-                        navigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
+                        mNavigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
                         break;
                 }
             }
         });
+
+        showUserInformation();
+    }
+
+    private void initUi() {
+        mNavigationView = findViewById(R.id.navigation_view);
+        imgAvatar = mNavigationView.getHeaderView(0).findViewById(R.id.img_avatar);
+        tvEmail = mNavigationView.getHeaderView(0).findViewById(R.id.tv_email);
+        tvName = mNavigationView.getHeaderView(0).findViewById(R.id.tv_name);
     }
 
     @Override
@@ -136,4 +157,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //    transaction.replace(R.id.content_frame, fragment);
 //    transaction.commit();
 //    }
+    
+    private void showUserInformation() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user == null){
+            return;
+        }
+
+        String name = user.getDisplayName();
+        String email = user.getEmail();
+        Uri photoUrl = user.getPhotoUrl();
+
+        if(name == null) {
+            tvName.setVisibility(View.GONE);
+        } else {
+            tvName.setVisibility(View.VISIBLE);
+            tvName.setText(name);
+        }
+
+        tvEmail.setText(email);
+        Glide.with(this).load(photoUrl).error(R.drawable.ic_avatar_defaul).into(imgAvatar);
+    }
 }
