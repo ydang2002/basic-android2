@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -138,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 mViewPager2.setCurrentItem(2);
                 mCurrentFragment = FRAGMENT_HISTORY;
             }
+        } else if (id == R.id.nav_sign_out ) {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(this, SignInActivity.class);
+            startActivity(intent);
+            finish();
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);//32:23
         return true;
