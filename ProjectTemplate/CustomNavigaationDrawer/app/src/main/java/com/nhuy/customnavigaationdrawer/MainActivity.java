@@ -1,5 +1,9 @@
 package com.nhuy.customnavigaationdrawer;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +16,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +35,8 @@ import com.nhuy.customnavigaationdrawer.Fragment.FavoriteFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HistoryFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HomeFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.MyProfileFragment;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,7 +55,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView imgAvatar;
     private TextView tvEmail, tvName;
     private NavigationView mNavigationView;
+    final private MyProfileFragment myProfileFragment = new MyProfileFragment();
 
+    final private ActivityResultLauncher <Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent intent = result.getData();
+                if (intent == null) {
+                    return;
+                }
+                Uri uri = intent.getData();
+                    try {
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                        myProfileFragment.setBitmapImage(bitmap);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+    });
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,27 +85,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initUi();
 
-        mTabLayout = findViewById(R.id.tab_layout);
-        mViewPager2 = findViewById(R.id.view_pager2);
-        mMyViewPagerAdapter = new MyViewPagerAdapter(this);
-        mViewPager2.setAdapter(mMyViewPagerAdapter);
-
-        new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-            @Override
-            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                switch (position){
-                    case 0:
-                        tab.setText(getString(R.string.nav_home));
-                        break;
-                    case 1:
-                        tab.setText(getString(R.string.nav_favorite));
-                        break;
-                    case 2:
-                        tab.setText(getString(R.string.nav_history));
-                        break;
-                }
-            }
-        }).attach();
+//        mTabLayout = findViewById(R.id.tab_layout);
+//        mViewPager2 = findViewById(R.id.view_pager2);
+//        mMyViewPagerAdapter = new MyViewPagerAdapter(this);
+//        mViewPager2.setAdapter(mMyViewPagerAdapter);
+//
+//        new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+//            @Override
+//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+//                switch (position){
+//                    case 0:
+//                        tab.setText(getString(R.string.nav_home));
+//                        break;
+//                    case 1:
+//                        tab.setText(getString(R.string.nav_favorite));
+//                        break;
+//                    case 2:
+//                        tab.setText(getString(R.string.nav_history));
+//                        break;
+//                }
+//            }
+//        }).attach();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -88,29 +115,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mNavigationView.setNavigationItemSelectedListener(this);
 
-//        replaceFragment(new HomeFragment());
+        replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
-        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                switch (position){
-                    case 0:
-                        mCurrentFragment = FRAGMENT_HOME;
-                        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-                        break;
-                    case 1:
-                        mCurrentFragment = FRAGMENT_FAVORITE;
-                        mNavigationView.getMenu().findItem(R.id.nav_favorite).setChecked(true);
-                        break;
-                    case 2:
-                        mCurrentFragment = FRAGMENT_HISTORY;
-                        mNavigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
-                        break;
-                }
-            }
-        });
+//        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                switch (position){
+//                    case 0:
+//                        mCurrentFragment = FRAGMENT_HOME;
+//                        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+//                        break;
+//                    case 1:
+//                        mCurrentFragment = FRAGMENT_FAVORITE;
+//                        mNavigationView.getMenu().findItem(R.id.nav_favorite).setChecked(true);
+//                        break;
+//                    case 2:
+//                        mCurrentFragment = FRAGMENT_HISTORY;
+//                        mNavigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
+//                        break;
+//                }
+//            }
+//        });
 
         showUserInformation();
     }
@@ -127,20 +154,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id== R.id.nav_home){
             if(mCurrentFragment != FRAGMENT_HOME){
-//                replaceFragment(new HomeFragment());
-                mViewPager2.setCurrentItem(0);
+                replaceFragment(new HomeFragment());
+//                mViewPager2.setCurrentItem(0);
                 mCurrentFragment = FRAGMENT_HOME;
             }
         } else if(id== R.id.nav_favorite){
             if(mCurrentFragment != FRAGMENT_FAVORITE){
-//                replaceFragment(new FavoriteFragment());
-                mViewPager2.setCurrentItem(1);
+                replaceFragment(new FavoriteFragment());
+//                mViewPager2.setCurrentItem(1);
                 mCurrentFragment = FRAGMENT_FAVORITE;
             }
         } else if(id== R.id.nav_history){
             if(mCurrentFragment != FRAGMENT_HISTORY){
-//                replaceFragment(new HistoryFragment());
-                mViewPager2.setCurrentItem(2);
+                replaceFragment(new HistoryFragment());
+//                mViewPager2.setCurrentItem(2);
                 mCurrentFragment = FRAGMENT_HISTORY;
             }
         } else if (id == R.id.nav_sign_out ) {
@@ -150,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         } else if (id == R.id.nav_my_profile ) {
             if(mCurrentFragment != FRAGMENT_MY_PROFILE){
-             //   replaceFragment(new MyProfileFragment());
-                mViewPager2.setCurrentItem(3);
+                replaceFragment(myProfileFragment);
+//                mViewPager2.setCurrentItem(3);
                 mCurrentFragment = FRAGMENT_MY_PROFILE;
             }
         }
@@ -168,11 +195,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-//    private  void replaceFragment(Fragment fragment){
-//    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//    transaction.replace(R.id.content_frame, fragment);
-//    transaction.commit();
-//    }
+    private  void replaceFragment(Fragment fragment){
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    transaction.replace(R.id.content_frame, fragment);
+    transaction.commit();
+    }
     
     private void showUserInformation() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -206,6 +233,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openGallery() {
-
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
 }

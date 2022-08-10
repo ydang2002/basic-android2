@@ -4,6 +4,7 @@ import static com.nhuy.customnavigaationdrawer.MainActivity.MY_REQUEST_CODE;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -85,5 +86,9 @@ public class MyProfileFragment extends Fragment {
             String [] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE};
             getActivity().requestPermissions(permissions, MY_REQUEST_CODE);
         }
+    }
+
+    public void setBitmapImage(Bitmap bitmapImage) {
+        imgAvatar.setImageBitmap(bitmapImage);
     }
 }
