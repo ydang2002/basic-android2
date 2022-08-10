@@ -23,6 +23,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText edtEmail, edtPassword;
     private Button btnSignUp;
     private ProgressDialog progressDialog;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         btnSignUp = findViewById(R.id.btn_sign_up);
 
         progressDialog = new ProgressDialog(this);
+        auth = FirebaseAuth.getInstance();
     }
 
     private void initListener() {
@@ -53,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
     private void onClickSignUp() {
         String strEmail = edtEmail.getText().toString().trim();
         String srtPassword = edtPassword.getText().toString().trim();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+       // FirebaseAuth auth = FirebaseAuth.getInstance();
         progressDialog.show();
         auth.createUserWithEmailAndPassword(strEmail, srtPassword)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

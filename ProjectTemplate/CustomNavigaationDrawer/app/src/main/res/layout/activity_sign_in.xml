@@ -10,7 +10,7 @@
     tools:context=".SignInActivity">
 
     <EditText
-        android:id="@+id/edt_email"
+        android:id="@+id/edt_email_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
@@ -20,7 +20,7 @@
         android:hint="Email"/>
 
     <EditText
-        android:id="@+id/edt_password"
+        android:id="@+id/edt_password_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionDone"
