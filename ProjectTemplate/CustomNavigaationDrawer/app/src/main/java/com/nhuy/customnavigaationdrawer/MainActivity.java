@@ -27,12 +27,14 @@ import com.google.firebase.auth.FirebaseUser;
 import com.nhuy.customnavigaationdrawer.Fragment.FavoriteFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HistoryFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HomeFragment;
+import com.nhuy.customnavigaationdrawer.Fragment.MyProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private  static final int FRAGMENT_HOME = 0;
     private  static final int FRAGMENT_FAVORITE = 1;
     private  static final int FRAGMENT_HISTORY = 2;
+    private  static final int FRAGMENT_MY_PROFILE = 3;
 
     private int mCurrentFragment = FRAGMENT_HOME;
 
@@ -144,6 +146,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
             finish();
+        } else if (id == R.id.nav_my_profile ) {
+            if(mCurrentFragment != FRAGMENT_MY_PROFILE){
+             //   replaceFragment(new MyProfileFragment());
+                mViewPager2.setCurrentItem(3);
+                mCurrentFragment = FRAGMENT_MY_PROFILE;
+            }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);//32:23
         return true;
