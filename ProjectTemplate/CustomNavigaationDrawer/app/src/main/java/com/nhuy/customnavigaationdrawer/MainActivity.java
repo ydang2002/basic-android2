@@ -107,6 +107,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            }
 //        }).attach();
 
+        //        mTabLayout = findViewById(R.id.tab_layout);
+//        mViewPager2 = findViewById(R.id.view_pager2);
+//        mMyViewPagerAdapter = new MyViewPagerAdapter(this);
+//        mViewPager2.setAdapter(mMyViewPagerAdapter);
+//
+//        new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
+//            @Override
+//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+//                switch (position){
+//                    case 0:
+//                        tab.setText(getString(R.string.nav_home));
+//                        break;
+//                    case 1:
+//                        tab.setText(getString(R.string.nav_favorite));
+//                        break;
+//                    case 2:
+//                        tab.setText(getString(R.string.nav_history));
+//                        break;
+//                }
+//            }
+//        }).attach();
+
         mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawerLayout.addDrawerListener(toggle);
