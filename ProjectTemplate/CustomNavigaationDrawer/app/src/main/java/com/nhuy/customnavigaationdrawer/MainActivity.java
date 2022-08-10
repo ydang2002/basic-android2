@@ -1,5 +1,9 @@
 package com.nhuy.customnavigaationdrawer;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,8 +16,10 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +35,8 @@ import com.nhuy.customnavigaationdrawer.Fragment.FavoriteFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HistoryFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HomeFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.MyProfileFragment;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,6 +55,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ImageView imgAvatar;
     private TextView tvEmail, tvName;
     private NavigationView mNavigationView;
+    final private MyProfileFragment myProfileFragment = new MyProfileFragment();
+
+    final private ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if (result.getResultCode() == RESULT_OK) {
+                Intent intent = result.getData();
+                if (intent == null) {
+                    return;
+                }
+                Uri uri = intent.getData();
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+                    myProfileFragment.setBitmapImageView(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,10 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        NavigationView navigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-//        replaceFragment(new HomeFragment());
+        //replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
 
         mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -108,6 +136,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         mCurrentFragment = FRAGMENT_HISTORY;
                         mNavigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
                         break;
+//                    case 3:
+//                        mCurrentFragment = FRAGMENT_MY_PROFILE;
+//                        mNavigationView.getMenu().findItem(R.id.nav_my_profile).setChecked(true);
+//                        break;
                 }
             }
         });
@@ -127,19 +159,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if(id== R.id.nav_home){
             if(mCurrentFragment != FRAGMENT_HOME){
-//                replaceFragment(new HomeFragment());
+                //replaceFragment(new HomeFragment());
                 mViewPager2.setCurrentItem(0);
                 mCurrentFragment = FRAGMENT_HOME;
             }
         } else if(id== R.id.nav_favorite){
             if(mCurrentFragment != FRAGMENT_FAVORITE){
-//                replaceFragment(new FavoriteFragment());
+                //replaceFragment(new FavoriteFragment());
                 mViewPager2.setCurrentItem(1);
                 mCurrentFragment = FRAGMENT_FAVORITE;
             }
         } else if(id== R.id.nav_history){
             if(mCurrentFragment != FRAGMENT_HISTORY){
-//                replaceFragment(new HistoryFragment());
+                //replaceFragment(new HistoryFragment());
                 mViewPager2.setCurrentItem(2);
                 mCurrentFragment = FRAGMENT_HISTORY;
             }
@@ -150,14 +182,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         } else if (id == R.id.nav_my_profile ) {
             if(mCurrentFragment != FRAGMENT_MY_PROFILE){
-             //   replaceFragment(new MyProfileFragment());
-                mViewPager2.setCurrentItem(3);
-                mCurrentFragment = FRAGMENT_MY_PROFILE;
+                //replaceFragment(myProfileFragment);
+                //mViewPager2.setCurrentItem(3);
+ //               mCurrentFragment = FRAGMENT_MY_PROFILE;
             }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);//32:23
         return true;
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -206,6 +240,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void openGallery() {
-
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
 }
