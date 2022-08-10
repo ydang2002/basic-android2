@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import com.nhuy.customnavigaationdrawer.Fragment.MyProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final int MY_REQUEST_CODE = 10;
     private  static final int FRAGMENT_HOME = 0;
     private  static final int FRAGMENT_FAVORITE = 1;
     private  static final int FRAGMENT_HISTORY = 2;
@@ -191,5 +193,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         tvEmail.setText(email);
         Glide.with(this).load(photoUrl).error(R.drawable.ic_avatar_defaul).into(imgAvatar);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_REQUEST_CODE) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openGallery();
+            }
+        }
+    }
+
+    public void openGallery() {
+
     }
 }
