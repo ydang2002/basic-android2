@@ -85,49 +85,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initUi();
 
-//        mTabLayout = findViewById(R.id.tab_layout);
-//        mViewPager2 = findViewById(R.id.view_pager2);
-//        mMyViewPagerAdapter = new MyViewPagerAdapter(this);
-//        mViewPager2.setAdapter(mMyViewPagerAdapter);
-//
-//        new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-//            @Override
-//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-//                switch (position){
-//                    case 0:
-//                        tab.setText(getString(R.string.nav_home));
-//                        break;
-//                    case 1:
-//                        tab.setText(getString(R.string.nav_favorite));
-//                        break;
-//                    case 2:
-//                        tab.setText(getString(R.string.nav_history));
-//                        break;
-//                }
-//            }
-//        }).attach();
-
-        //        mTabLayout = findViewById(R.id.tab_layout);
-//        mViewPager2 = findViewById(R.id.view_pager2);
-//        mMyViewPagerAdapter = new MyViewPagerAdapter(this);
-//        mViewPager2.setAdapter(mMyViewPagerAdapter);
-//
-//        new TabLayoutMediator(mTabLayout, mViewPager2, new TabLayoutMediator.TabConfigurationStrategy() {
-//            @Override
-//            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-//                switch (position){
-//                    case 0:
-//                        tab.setText(getString(R.string.nav_home));
-//                        break;
-//                    case 1:
-//                        tab.setText(getString(R.string.nav_favorite));
-//                        break;
-//                    case 2:
-//                        tab.setText(getString(R.string.nav_history));
-//                        break;
-//                }
-//            }
-//        }).attach();
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -139,27 +96,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-
-//        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-//            @Override
-//            public void onPageSelected(int position) {
-//                super.onPageSelected(position);
-//                switch (position){
-//                    case 0:
-//                        mCurrentFragment = FRAGMENT_HOME;
-//                        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-//                        break;
-//                    case 1:
-//                        mCurrentFragment = FRAGMENT_FAVORITE;
-//                        mNavigationView.getMenu().findItem(R.id.nav_favorite).setChecked(true);
-//                        break;
-//                    case 2:
-//                        mCurrentFragment = FRAGMENT_HISTORY;
-//                        mNavigationView.getMenu().findItem(R.id.nav_history).setChecked(true);
-//                        break;
-//                }
-//            }
-//        });
 
         showUserInformation();
     }
@@ -177,19 +113,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id== R.id.nav_home){
             if(mCurrentFragment != FRAGMENT_HOME){
                 replaceFragment(new HomeFragment());
-//                mViewPager2.setCurrentItem(0);
                 mCurrentFragment = FRAGMENT_HOME;
             }
         } else if(id== R.id.nav_favorite){
             if(mCurrentFragment != FRAGMENT_FAVORITE){
                 replaceFragment(new FavoriteFragment());
-//                mViewPager2.setCurrentItem(1);
                 mCurrentFragment = FRAGMENT_FAVORITE;
             }
         } else if(id== R.id.nav_history){
             if(mCurrentFragment != FRAGMENT_HISTORY){
                 replaceFragment(new HistoryFragment());
-//                mViewPager2.setCurrentItem(2);
                 mCurrentFragment = FRAGMENT_HISTORY;
             }
         } else if (id == R.id.nav_sign_out ) {
@@ -200,7 +133,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_my_profile ) {
             if(mCurrentFragment != FRAGMENT_MY_PROFILE){
                 replaceFragment(myProfileFragment);
-//                mViewPager2.setCurrentItem(3);
                 mCurrentFragment = FRAGMENT_MY_PROFILE;
             }
         }
