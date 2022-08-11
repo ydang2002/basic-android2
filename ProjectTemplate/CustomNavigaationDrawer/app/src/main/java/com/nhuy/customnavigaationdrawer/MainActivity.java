@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     return;
                 }
                 Uri uri = intent.getData();
+                myProfileFragment.setUri(uri);
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
                         myProfileFragment.setBitmapImage(bitmap);
@@ -155,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     transaction.commit();
     }
     
-    private void showUserInformation() {
+    public void showUserInformation() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user == null){
             return;
@@ -192,4 +193,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         intent.setAction(Intent.ACTION_GET_CONTENT);
         mActivityResultLauncher.launch(Intent.createChooser(intent, "Select picture"));
     }
-}
+}//31:51
