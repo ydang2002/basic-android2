@@ -36,7 +36,7 @@ public class MyProfileFragment extends Fragment {
     private View mView;
     private ImageView imgAvatar;
     private EditText edtFullName, edtEmail;
-    private Button btnUpdateProfile;
+    private Button btnUpdateProfile, btnUpdateEmail;
     private Uri mUri;
     private MainActivity mMainActivity;
     private ProgressDialog progressDialog;
@@ -60,6 +60,7 @@ public class MyProfileFragment extends Fragment {
         edtFullName = mView.findViewById(R.id.edt_full_name);
         edtEmail = mView.findViewById(R.id.edt_email_profile);
         btnUpdateProfile = mView.findViewById(R.id.btn_update_profile);
+        btnUpdateEmail = mView.findViewById(R.id.btn_update_email);
     }
 
     private void setUserInformation() {
@@ -85,6 +86,13 @@ public class MyProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onClickUpdateProfile();
+            }
+        });
+
+        btnUpdateEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickUpdateEmail();
             }
         });
     }
@@ -138,5 +146,23 @@ public class MyProfileFragment extends Fragment {
                     }
                 });
 
+    }
+
+    private void onClickUpdateEmail() {
+        String strEmail = edtEmail.getText().toString().trim();
+        progressDialog.show();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.updateEmail(strEmail)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        progressDialog.dismiss();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getActivity(), "User email address updated.", Toast.LENGTH_SHORT).show();
+                            mMainActivity.showUserInformation();
+                        }
+                    }
+                });
     }
 }

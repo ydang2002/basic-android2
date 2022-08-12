@@ -38,4 +38,11 @@
         android:layout_marginTop="30dp"
         android:text="Update Profile"/>
 
+    <Button
+        android:id="@+id/btn_update_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Update Email"/>
+
 </LinearLayout>
