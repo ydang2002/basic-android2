@@ -31,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nhuy.customnavigaationdrawer.Fragment.ChangePassWordFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.FavoriteFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HistoryFragment;
 import com.nhuy.customnavigaationdrawer.Fragment.HomeFragment;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private  static final int FRAGMENT_FAVORITE = 1;
     private  static final int FRAGMENT_HISTORY = 2;
     private  static final int FRAGMENT_MY_PROFILE = 3;
+    private  static final int FRAGMENT_CHANGE_PASSWORD = 3;
 
     private int mCurrentFragment = FRAGMENT_HOME;
 
@@ -135,6 +137,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(mCurrentFragment != FRAGMENT_MY_PROFILE){
                 replaceFragment(myProfileFragment);
                 mCurrentFragment = FRAGMENT_MY_PROFILE;
+            }
+        } else if (id == R.id.nav_change_password ) {
+            if(mCurrentFragment != FRAGMENT_CHANGE_PASSWORD){
+                replaceFragment(new ChangePassWordFragment());
+                mCurrentFragment = FRAGMENT_CHANGE_PASSWORD;
             }
         }
         mDrawerLayout.closeDrawer(GravityCompat.START);//32:23
