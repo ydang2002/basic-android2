@@ -26,6 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     private Button btnSignIn;
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
+    private LinearLayout layoutForgotPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class SignInActivity extends AppCompatActivity {
         edtEmail = findViewById(R.id.edt_email_sign_in);
         edtPassword = findViewById(R.id.edt_password_sign_in);
         btnSignIn = findViewById(R.id.btn_sign_in);
+        layoutForgotPassword = findViewById(R.id.layout_forgot_password);
     }
 
     private void initListener() {
@@ -60,6 +62,13 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                onClickSign();
+            }
+        });
+
+        layoutForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickForgetPassword();
             }
         });
     }
@@ -85,5 +94,9 @@ public class SignInActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void onClickForgetPassword() {
+
     }
 }
