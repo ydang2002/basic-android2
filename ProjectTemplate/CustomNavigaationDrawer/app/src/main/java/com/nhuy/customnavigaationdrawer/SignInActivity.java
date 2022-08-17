@@ -97,6 +97,22 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void onClickForgetPassword() {
+        progressDialog.show();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String emailAddress = "nhuy.danghuynh2002@gmail.com";
+
+        auth.sendPasswordResetEmail(emailAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(SignInActivity.this, "Email sent.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignInActivity.this, "Email sent fail.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
     }
 }
