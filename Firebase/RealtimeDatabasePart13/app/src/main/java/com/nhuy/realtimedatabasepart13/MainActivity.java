@@ -19,17 +19,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     TextView tvData;
-    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = findViewById(R.id.edt_data);
         Button btnPushData = findViewById(R.id.btn_push_data);
         tvData = findViewById(R.id.tv_get_data);
         Button btnGetData = findViewById(R.id.btn_get_data);
+        Button btnDelete = findViewById(R.id.btn_delete_data);
 
         btnPushData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,14 +43,23 @@ public class MainActivity extends AppCompatActivity {
                 onClickGetData();
             }
         });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickDeleteData();
+            }
+        });
     }
 
     private void onClickPushData() {
-        // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("user_info");
 
-        myRef.setValue(Integer.parseInt(editText.getText().toString().trim()), new DatabaseReference.CompletionListener() {
+        User user = new User(1,"Nhu Y", new Job(1, "job 1"));
+        user.setAddress("HCM");
+
+        myRef.setValue(user, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Toast.makeText(MainActivity.this, "Push data success", Toast.LENGTH_SHORT).show();
@@ -61,15 +69,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClickGetData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = database.getReference("user_info");
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                int value = dataSnapshot.getValue(Integer.class);
-                tvData.setText(String.valueOf(value));
+                User user = dataSnapshot.getValue(User.class);
+                tvData.setText(user.toString());
             }
 
             @Override
@@ -77,5 +85,9 @@ public class MainActivity extends AppCompatActivity {
                 // Failed to read value
             }
         });
+    }
+
+    private void onClickDeleteData() {
+
     }
 }
