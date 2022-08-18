@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         btnGetData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                readDataBase();
+                onClickGetData();
             }
         });
     }
@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
-        myRef.setValue(editText.getText().toString().trim());
+        myRef.setValue(Integer.parseInt(editText.getText().toString().trim()));
     }
 
-    private void readDataBase() {
+    private void onClickGetData() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
         // Read from the database
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                tvData.setText(value);
+                int value = dataSnapshot.getValue(Integer.class);
+                tvData.setText(String.valueOf(value));
             }
 
             @Override
