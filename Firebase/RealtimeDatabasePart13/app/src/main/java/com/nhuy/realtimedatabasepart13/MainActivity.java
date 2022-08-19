@@ -66,13 +66,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickPushData() {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("user_info");
+        DatabaseReference myRef = database.getReference("my_map");
 
-        User user = new User(1,"Nhu Y", new Job(1, "job 1"));
-        user.setAddress("HCM");
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("1", true);
+        map.put("2", false);
+        map.put("3", true);
+        map.put("4", false);
 
-        myRef.setValue(user, new DatabaseReference.CompletionListener() {
+        myRef.setValue(map, new DatabaseReference.CompletionListener() {
             @Override
             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                 Toast.makeText(MainActivity.this, "Push data success", Toast.LENGTH_SHORT).show();
@@ -81,16 +85,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickGetData() {
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("user_info");
+        DatabaseReference myRef = database.getReference("my_map");
         // Read from the database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                User user = dataSnapshot.getValue(User.class);
-                tvData.setText(user.toString());
+               Map<String, Boolean> mapResult = new HashMap<>();
+               for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                   String key = dataSnapshot1.getKey();
+                   Boolean value = dataSnapshot1.getValue(Boolean.class);
+
+                   mapResult.put(key, value);
+               }
+                tvData.setText(mapResult.toString());
             }
 
             @Override
@@ -101,56 +110,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onClickUpdateData() {
-        // Update cách 1
+
+        // Cách 1
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("user_info");
+//        DatabaseReference myRef = database.getReference("my_map");
 //
-//        User user = new User(2,"test", new Job(2, "job 2"));
-//        user.setAddress("HN");
+//        Map<String, Boolean> mapUpdate = new HashMap<>();
+//        mapUpdate.put("1", true);
+//        mapUpdate.put("2", false);
+//        mapUpdate.put("3", true);
+//        mapUpdate.put("4", false);
 //
-//        myRef.setValue(user, new DatabaseReference.CompletionListener() {
+//        myRef.setValue(mapUpdate, new DatabaseReference.CompletionListener() {
 //            @Override
 //            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 //                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
 //            }
 //        });
 
-        // cách 2
+
+//        // Cách 3
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("user_info/name");
-//        myRef.setValue("test 2", new DatabaseReference.CompletionListener() {
+//        DatabaseReference myRef = database.getReference("my_map");
+//        Map<String, Object> mapUpdate = new HashMap<>();
+//        mapUpdate.put("2", "true");
+//        mapUpdate.put("4", "true");
+//
+//        myRef.updateChildren(mapUpdate, new DatabaseReference.CompletionListener() {
 //            @Override
 //            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
 //                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
 //            }
 //        });
-
-        // cách 2.1
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("user_info");
-//        myRef.child("job").child("name").setValue("Nhu Y", new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-        // Cách 3
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("user_info");
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("address", "Sài Gòn");
-//        map.put("name", "ABC");
-//        map.put("job/name", "job 3");
-
-        User user = new User("Dang", "Đà Nẵng");
-
-        myRef.updateChildren(user.toMap(), new DatabaseReference.CompletionListener() {
-            @Override
-            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void onClickDeleteData() {
