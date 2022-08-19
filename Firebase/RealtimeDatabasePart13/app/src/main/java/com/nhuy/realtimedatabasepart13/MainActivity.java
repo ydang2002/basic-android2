@@ -17,6 +17,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
     TextView tvData;
 
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         tvData = findViewById(R.id.tv_get_data);
         Button btnGetData = findViewById(R.id.btn_get_data);
         Button btnDelete = findViewById(R.id.btn_delete_data);
+        Button btnUpdate = findViewById(R.id.btn_update_data);
 
         btnPushData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 onClickDeleteData();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickUpdateData();
             }
         });
     }
@@ -89,5 +100,58 @@ public class MainActivity extends AppCompatActivity {
 
     private void onClickDeleteData() {
 
+    }
+
+    private void onClickUpdateData() {
+        // Update cách 1
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("user_info");
+//
+//        User user = new User(2,"test", new Job(2, "job 2"));
+//        user.setAddress("HN");
+//
+//        myRef.setValue(user, new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        // cách 2
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("user_info/name");
+//        myRef.setValue("test 2", new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        // cách 2.1
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("user_info");
+//        myRef.child("job").child("name").setValue("Nhu Y", new DatabaseReference.CompletionListener() {
+//            @Override
+//            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        // Cách 3
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("user_info");
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("address", "Sài Gòn");
+//        map.put("name", "ABC");
+//        map.put("job/name", "job 3");
+
+        User user = new User("Dang", "Đà Nẵng");
+
+        myRef.updateChildren(user.toMap(), new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
