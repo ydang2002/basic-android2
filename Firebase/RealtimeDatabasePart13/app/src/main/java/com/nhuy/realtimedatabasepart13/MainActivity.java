@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -98,10 +100,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void onClickDeleteData() {
-
-    }
-
     private void onClickUpdateData() {
         // Update cách 1
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -153,5 +151,44 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void onClickDeleteData() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.app_name))
+                .setMessage("Bạn có chắc chắn xóa không?")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("user_info");
+
+                        // Cách 1
+//                        myRef.removeValue(new DatabaseReference.CompletionListener() {
+//                            @Override
+//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                Toast.makeText(MainActivity.this, "Delete data success", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+
+                        // Cách 2
+//                        myRef.child("job").child("name").removeValue(new DatabaseReference.CompletionListener() {
+//                            @Override
+//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+//                                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+
+                        // Xóa Object user_info
+                        myRef.removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }
