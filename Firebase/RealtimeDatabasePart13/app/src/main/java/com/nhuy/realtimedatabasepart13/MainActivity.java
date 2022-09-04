@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
-                        DatabaseReference myRef = database.getReference("user_info");
+                        DatabaseReference myRef = database.getReference("my_map");
 
                         // Cách 1
 //                        myRef.removeValue(new DatabaseReference.CompletionListener() {
