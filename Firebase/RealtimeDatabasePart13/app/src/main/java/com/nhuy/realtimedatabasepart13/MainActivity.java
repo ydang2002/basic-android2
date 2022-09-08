@@ -8,9 +8,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -70,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
         rcvUsers.addItemDecoration(dividerItemDecoration);
 
         mListUser = new ArrayList<>();
-        mUserAdapter = new UserAdapter(mListUser);
+        mUserAdapter = new UserAdapter(mListUser, new UserAdapter.IClickListener() {
+            @Override
+            public void onClickUpdate(User user) {
+                openDialogUpdateItem(user);
+            }
+        });
 
         rcvUsers.setAdapter(mUserAdapter);
     }
@@ -142,7 +152,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                User user = snapshot.getValue(User.class);
+                if(user == null || mListUser == null || mListUser.isEmpty()) {
+                    return;
+                }
 
+                for(int i = 0; i < mListUser.size(); i++) {
+                    if (user.getId() == mListUser.get(i).getId()) {
+                        mListUser.set(i, user);
+                    }
+                }
+
+                mUserAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -160,6 +181,49 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void openDialogUpdateItem(User user) {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.layout_dialog_update);
+        Window window = dialog.getWindow();
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setCancelable(false);
+
+        EditText edtUpdateName = dialog.findViewById(R.id.edt_update_name);
+        Button btnCancel = dialog.findViewById(R.id.btn_cancel);
+        Button btnUpdate = dialog.findViewById(R.id.btn_update);
+
+        edtUpdateName.setText(user.getName());
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("list_users");
+
+                String newName = edtUpdateName.getText().toString().trim();
+                user.setName(newName);
+                myRef.child(String.valueOf(user.getId())).updateChildren(user.toMap(), new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(MainActivity.this, "update data success", Toast.LENGTH_SHORT);
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        dialog.show();
     }
 
 
