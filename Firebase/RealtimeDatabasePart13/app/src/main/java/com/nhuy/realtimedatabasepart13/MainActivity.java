@@ -80,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClickUpdate(User user) {
                 openDialogUpdateItem(user);
             }
+
+            @Override
+            public void onClickDeleteItem(User user) {
+                onClickDeleteData(user);
+            }
         });
 
         rcvUsers.setAdapter(mUserAdapter);
@@ -168,7 +173,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                User user = snapshot.getValue(User.class);
+                if(user == null || mListUser == null || mListUser.isEmpty()) {
+                    return;
+                }
+                for(int i = 0; i < mListUser.size(); i++) {
+                    if (user.getId() == mListUser.get(i).getId()) {
+                        mListUser.remove(mListUser.get(i));
+                        break;
+                    }
+                }
+                mUserAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -227,25 +242,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    private void onClickDeleteData() {
-//        new AlertDialog.Builder(this)
-//                .setTitle(getString(R.string.app_name))
-//                .setMessage("Bạn có chắc chắn xóa không?")
-//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//                        DatabaseReference myRef = database.getReference("my_map");
-//
-//                        myRef.removeValue(new DatabaseReference.CompletionListener() {
-//                            @Override
-//                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-//                                Toast.makeText(MainActivity.this, "Update data success", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                    }
-//                })
-//                .setNegativeButton("Cancel", null)
-//                .show();
-//    }
+    private void onClickDeleteData(User user) {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.app_name))
+                .setMessage("Bạn có chắc chắn xóa không?")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference("list_users");
+
+                        myRef.child(String.valueOf(user.getId())).removeValue(new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(MainActivity.this, "Delete data success", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
 }
