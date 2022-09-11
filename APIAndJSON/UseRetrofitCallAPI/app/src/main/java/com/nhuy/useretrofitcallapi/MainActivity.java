@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.nhuy.useretrofitcallapi.api.ApiService;
 import com.nhuy.useretrofitcallapi.model.Currency;
+import com.nhuy.useretrofitcallapi.model.Post;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView tvSource;
     private TextView tvUsdVnd;
     private Button btnCallApi;
+    private TextView tvPostResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
         tvSource = findViewById(R.id.tv_source);
         tvUsdVnd = findViewById(R.id.tv_usd_vnd);
         btnCallApi = findViewById(R.id.btn_call_api);
+        tvPostResult = findViewById(R.id.tv_id_post_result);
 
         btnCallApi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickCallApi();
+               // clickCallApi();
+                sendPosts();
             }
         });
     }
@@ -65,6 +69,27 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Currency> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Call Api Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void sendPosts() {
+        Post post = new Post(10, 101, "Nhu Y", "Nhu Y 123");
+
+        ApiService.apiService.sendPosts(post).enqueue(new Callback<Post>() {
+            @Override
+            public void onResponse(Call<Post> call, Response<Post> response) {
+                Toast.makeText(MainActivity.this, "Call Api success", Toast.LENGTH_SHORT).show();
+
+                Post postResult = response.body();
+                if(postResult != null) {
+                    tvPostResult.setText(postResult.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Post> call, Throwable t) {
                 Toast.makeText(MainActivity.this, "Call Api Error", Toast.LENGTH_SHORT).show();
             }
         });
